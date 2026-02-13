@@ -1,0 +1,50 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: thermostat-mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: Kassan1!
+      MYSQL_DATABASE: thermostat
+      MYSQL_USER: thermostat
+      MYSQL_PASSWORD: Thermostat1!
+      TZ: Europe/Stockholm
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  thermostat:
+    container_name: thermostat
+    build:
+      context: ./thermostat-service/
+      dockerfile: src/main/docker/Dockerfile.jvm
+    ports:
+      - "8080:8080"
+    environment:
+      MYSQL_URI: thermostat-mysql:3306
+      MYSQL_DATABASE: thermostat
+      MYSQL_USER: thermostat
+      MYSQL_PASSWORD: Thermostat1!
+      TEMPERATURE_SENSORS: "temperature-sensor-1,temperature-sensor-2"
+      DEFAULT_TEMPERATURE_SENSOR: temperature-sensor-1
+
+  temperature-sensor-1:
+    container_name: temperature-sensor-1
+    build:
+      context: ./temperature-service/
+      dockerfile: src/main/docker/Dockerfile.jvm
+    ports:
+      - "8081:8080"
+
+  temperature-sensor-2:
+    container_name: temperature-sensor-2
+    build:
+      context: ./temperature-service/
+      dockerfile: src/main/docker/Dockerfile.jvm
+    ports:
+      - "8082:8080"
+
+
+volumes:
+  mysql_data:

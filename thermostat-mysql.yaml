@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: thermostat-mysql-secret
+type: Opaque
+stringData:
+  MYSQL_ROOT_PASSWORD: "Kassan1!"
+  MYSQL_PASSWORD: "Thermostat1!"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: thermostat-mysql-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: thermostat-mysql
+spec:
+  selector:
+    app: thermostat-mysql
+  ports:
+    - name: mysql
+      port: 3306
+      targetPort: 3306
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thermostat-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: thermostat-mysql
+  template:
+    metadata:
+      labels:
+        app: thermostat-mysql
+    spec:
+      containers:
+        - name: thermostat-mysql
+          image: mysql:8.0
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: thermostat-mysql-secret
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_DATABASE
+              value: thermostat
+            - name: MYSQL_USER
+              value: thermostat
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: thermostat-mysql-secret
+                  key: MYSQL_PASSWORD
+            - name: TZ
+              value: Europe/Stockholm
+          volumeMounts:
+            - name: thermostat-mysql-data
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: thermostat-mysql-data
+          persistentVolumeClaim:
+            claimName: thermostat-mysql-data

@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: thermostat
+spec:
+  selector:
+    app: thermostat
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thermostat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: thermostat
+  template:
+    metadata:
+      labels:
+        app: thermostat
+    spec:
+      containers:
+        - name: thermostat
+          image: thermostat:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MYSQL_URI
+              value: mysql:3306
+            - name: MYSQL_DATABASE
+              value: thermostat
+            - name: MYSQL_USER
+              value: thermostat
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: thermostat-secret
+                  key: MYSQL_PASSWORD
+            - name: TEMPERATURE_SENSORS
+              value: "temperature-sensor-1,temperature-sensor-2"
+            - name: DEFAULT_TEMPERATURE_SENSOR
+              value: "temperature-sensor-1"

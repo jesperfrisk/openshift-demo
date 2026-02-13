@@ -1,0 +1,25 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: temperature-sensor
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: temperature-sensor
+spec:
+  runPolicy: Serial
+  source:
+    type: Git
+    git:
+      uri: https://<my-repo>
+      ref: feature/img-build
+    contextDir: temperature-service
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+  output:
+    to:
+      kind: ImageStreamTag
+      name: temperature-sensor:latest
