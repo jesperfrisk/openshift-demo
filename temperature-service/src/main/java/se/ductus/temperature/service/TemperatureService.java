@@ -1,4 +1,4 @@
-package se.ductus.temperature.application;
+package se.ductus.temperature.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

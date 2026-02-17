@@ -9,7 +9,7 @@ import jakarta.ws.rs.core.MediaType;
 import se.ductus.temperature.api.dto.HeatingRequest;
 import se.ductus.temperature.api.dto.TemperatureResponse;
 import se.ductus.temperature.api.mapper.TemperatureMapper;
-import se.ductus.temperature.application.TemperatureService;
+import se.ductus.temperature.service.TemperatureService;
 import se.ductus.temperature.domain.Temperature;
 
 @Path("/temperature-sensor")

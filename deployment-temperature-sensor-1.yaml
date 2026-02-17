@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: temperature-sensor-1
+  annotations:
+    image.openshift.io/triggers: >
+      [{"from":{"kind":"ImageStreamTag","name":"temperature-sensor:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"temperature-sensor\")].image"}]
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: temperature-sensor-1
+  template:
+    metadata:
+      labels:
+        app: temperature-sensor-1
+    spec:
+      containers:
+        - name: temperature-sensor
+          image: temperature-sensor:latest
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: debug
+              containerPort: 5005
+          env:
+            - name: JAVA_TOOL_OPTIONS
+              value: >-
+                -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: temperature-sensor-1
+spec:
+  selector:
+    app: temperature-sensor-1
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: temperature-sensor-1
+spec:
+  to:
+    kind: Service
+    name: temperature-sensor-1
+  port:
+    targetPort: http
+  tls:
+    termination: edge

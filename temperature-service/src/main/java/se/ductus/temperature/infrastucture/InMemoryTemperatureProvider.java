@@ -7,16 +7,12 @@ import se.ductus.temperature.domain.TemperatureProvider;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
-import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
+import io.quarkus.scheduler.Scheduled;
 
 @Singleton
 @Named("InMemory")
 public class InMemoryTemperatureProvider implements TemperatureProvider {
-
-    private final float MAX_TEMPERATURE = 35f;
-    private final float MIN_TEMPERATURE = -40;
 
     private final Temperature temperature;
     private boolean heating;
@@ -27,29 +23,30 @@ public class InMemoryTemperatureProvider implements TemperatureProvider {
     public InMemoryTemperatureProvider() {
         this.temperature = new Temperature();
         this.temperature.setCelsius((float) (-30.0f + Math.random() * (30.0f - -30.0f)));
+    }
 
-        Runnable task = () -> {
-            float newTemp;
+    @Scheduled(every = "1s")
+    void alterTemperature() {
+        float MAX_TEMPERATURE = 35f;
+        float MIN_TEMPERATURE = -40;
 
-            if (heating) {
-                newTemp = this.temperature.getCelsius() + 0.8f;
-            }
-            else {
-                newTemp = this.temperature.getCelsius() - 0.4f;
-            }
+        float newTemp;
 
-            if (newTemp >= MAX_TEMPERATURE) {
-                newTemp = MAX_TEMPERATURE;
-            }
-            if (newTemp <= MIN_TEMPERATURE) {
-                newTemp = MIN_TEMPERATURE;
-            }
+        if (heating) {
+            newTemp = this.temperature.getCelsius() + 0.8f;
+        }
+        else {
+            newTemp = this.temperature.getCelsius() - 0.4f;
+        }
 
-            this.temperature.setCelsius(newTemp);
+        if (newTemp >= MAX_TEMPERATURE) {
+            newTemp = MAX_TEMPERATURE;
+        }
+        if (newTemp <= MIN_TEMPERATURE) {
+            newTemp = MIN_TEMPERATURE;
+        }
 
-        };
-
-        scheduler.scheduleWithFixedDelay(task, 0, 1, TimeUnit.SECONDS);
+        this.temperature.setCelsius(newTemp);
     }
 
     @Override
