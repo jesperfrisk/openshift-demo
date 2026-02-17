@@ -10,13 +10,14 @@ stringData:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: thermostat-mysql-data
+  name: thermostat-mysql-pvc
 spec:
+  storageClassName: crc-csi-hostpath-provisioner
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
+      storage: 1Gi
 ---
 apiVersion: v1
 kind: Service
@@ -46,7 +47,7 @@ spec:
     spec:
       containers:
         - name: thermostat-mysql
-          image: mysql:8.0
+          image: registry.redhat.io/rhscl/mysql-56-rhel7
           ports:
             - containerPort: 3306
           env:
@@ -72,4 +73,4 @@ spec:
       volumes:
         - name: thermostat-mysql-data
           persistentVolumeClaim:
-            claimName: thermostat-mysql-data
+            claimName: thermostat-mysql-pvc
