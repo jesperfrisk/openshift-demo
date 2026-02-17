@@ -12,8 +12,8 @@ spec:
   source:
     type: Git
     git:
-      uri: https://github.com/jesperfrisk/openshift-demo
-      ref: feature/img-build
+      uri: https://github.com/jesperfrisk/openshift-demo.git
+      ref: main
     contextDir: thermostat-service
   strategy:
     type: Docker
@@ -23,3 +23,5 @@ spec:
     to:
       kind: ImageStreamTag
       name: thermostat:latest
+  triggers:
+    - type: ConfigChange

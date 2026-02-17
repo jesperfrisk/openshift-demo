@@ -1,19 +1,10 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: temperature-sensor
-spec:
-  selector:
-    app: temperature-sensor
-  ports:
-    - name: http
-      port: 8080
-      targetPort: 8080
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: temperature-sensor
+  annotations:
+    image.openshift.io/triggers: >
+      [{"from":{"kind":"ImageStreamTag","name":"temperature-sensor:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"temperature-sensor\")].image"}]
 spec:
   replicas: 1
   selector:
@@ -29,3 +20,15 @@ spec:
           image: temperature-sensor:latest
           ports:
             - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: temperature-sensor
+spec:
+  selector:
+    app: temperature-sensor
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
