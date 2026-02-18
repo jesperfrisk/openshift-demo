@@ -61,7 +61,7 @@ public class ThermostatService {
             if (temperature.celsius < temperatureSetpoint.celsius) {
                 temperatureSensorService.setHeating(url, new Heating(true));
             }
-            if (temperatureSetpoint.celsius > temperature.celsius) {
+            if (temperature.celsius > temperatureSetpoint.celsius) {
                 temperatureSensorService.setHeating(url, new Heating(false));
             }
 
