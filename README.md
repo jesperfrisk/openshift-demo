@@ -7,7 +7,7 @@ We suggest that you fork this repo and learn it in your own environment, if you 
 **Branches:**
  
  * **main**: Represents the final state of the demo, showing one possible implementation, serving as a reference solution (which of course can be improved).
- * **demo**: The branch we created for you to start in.
+ * **lab**: The branch we created for you to start in. Switch to branch `lab` and read the [lab instructions](LAB.md) 
 
 
 ## Requirements
