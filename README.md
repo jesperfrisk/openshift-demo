@@ -1,4 +1,4 @@
-# Ductus demo project for: Quarkus, Cucumber:Gherkin and OpenShift
+# Ductus demo project for: Quarkus and OpenShift
 
 101-Tutorial for setting up a Quarkus application running either docker (locally) or on an OpenShift cluster through OpenShift local (CRC). Meant as a demo project to familiarize oneself with the mentioned tools.
 
