@@ -37,8 +37,8 @@ spec:
                   key: MYSQL_PASSWORD
             - name: TEMPERATURE_SENSORS
               value: "temperature-sensor-1,temperature-sensor-2"
-            - name: DEFAULT_TEMPERATURE_SENSOR
-              value: "temperature-sensor-1"
+            - name: DEFAULT_TEMPERATURE_SENSOR_URI
+              value: "http://temperature-service:8080"
             - name: JAVA_TOOL_OPTIONS
               value: >-
                 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
