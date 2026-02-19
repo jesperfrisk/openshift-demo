@@ -27,7 +27,18 @@ services:
       MYSQL_USER: thermostat
       MYSQL_PASSWORD: Thermostat1!
       TEMPERATURE_SENSORS: "temperature-sensor-1,temperature-sensor-2"
-      DEFAULT_TEMPERATURE_SENSOR: temperature-sensor-1
+      DEFAULT_TEMPERATURE_SENSOR_URI: "http://temperature-service:8080"
+
+  temperature-service:
+    image: nginx:1.27-alpine
+    container_name: temperature-sensor-proxy
+    ports:
+      - "8000:8080"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - temperature-sensor-1
+      - temperature-sensor-2
 
   temperature-sensor-1:
     container_name: temperature-sensor-1
