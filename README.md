@@ -108,7 +108,7 @@ The creators of this repository have set up the cluster using Kubernetes/OpenShi
 
 * Build the images for the apps, from the repository, using the buildconfig yaml manifests: `oc apply -f build-temperature-sensor.yaml` and `oc apply -f build-thermostat.yaml`. If you check the build manifests you can set the repo url and the target branch that the image is built from.
 
-* Deploy the apps by using the deployment manifests: `oc apply -f deployment-temperature-sensor-1.yaml`, `oc apply -f deployment-temperature-sensor-2.yaml` and `oc apply -f deployment-thermostat.yaml`. This will start two temperature sensors, proxy temperature service and one themrostat system.
+* Deploy the apps by using the deployment manifests: `oc apply -f deployment-temperature-sensor-1.yaml`, `oc apply -f deployment-temperature-sensor-2.yaml` and `oc apply -f deployment-thermostat.yaml`. This will start two temperature sensors and one themrostat system.
 
 * When you can see that the pod for the app have a 'Running' status in the OpenShift web-console, you should now be able to run the `oc get routes` to extract the url where you can reach your application endpoints.
 
