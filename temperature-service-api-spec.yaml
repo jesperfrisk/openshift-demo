@@ -1,0 +1,47 @@
+---
+openapi: 3.1.0
+components:
+  schemas:
+    HeatingRequest:
+      type: object
+      properties:
+        heating:
+          type: boolean
+    TemperatureResponse:
+      type: object
+      properties:
+        celsius:
+          type: number
+          format: float
+paths:
+  /temperature-sensor/{temperatureSensorId}/heating:
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HeatingRequest"
+        required: true
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+      summary: Set Heating
+      tags:
+      - Temperature Resource
+  /temperature-sensor/{temperatureSensorId}/temperature:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TemperatureResponse"
+      summary: Temperature
+      tags:
+      - Temperature Resource
+info:
+  title: temperature-service API
+  version: 1.0.0-SNAPSHOT

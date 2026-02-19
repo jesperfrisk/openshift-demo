@@ -55,3 +55,9 @@ Currently the Temperature Sensor System is written with Spring. Your next task i
     2. When `heat` is off the temperature value must decrease.
 
 4. Set a MAX and MIN value for the temperature, so that the temperature is within a realistic value.
+
+## Task 3: Abstract away individual handling of Temperature Sensors
+
+Currently the Thermostat system builds the url to specific temperature sensor by using the `temperatureSensorId` as address (as it is also the service name). This works but is a crude soulution. Best would be if the Thermostat system instead calls a `TemperatureService` which handles each temperature sensor request and routes it to the correct temperature sensor.
+
+Implement the [Temperature Service Api Spec](./temperature-service-api-spec.yaml)
