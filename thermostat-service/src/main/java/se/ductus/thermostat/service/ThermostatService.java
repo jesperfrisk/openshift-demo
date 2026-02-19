@@ -10,7 +10,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import se.ductus.temperaturesensor.model.Heating;
 import se.ductus.temperaturesensor.model.Temperature;
-import se.ductus.temperaturesensor.service.TemperatureSensorService;
+import se.ductus.temperaturesensor.service.TemperatureService;
 import se.ductus.thermostat.model.TemperatureSetpoint;
 import se.ductus.thermostat.persistence.TemperatureSetpointRepository;
 
@@ -26,7 +26,7 @@ public class ThermostatService {
 
     @Inject
     @RestClient
-    TemperatureSensorService temperatureSensorService;
+    TemperatureService temperatureService;
 
     @Inject
     @ConfigProperty(name = "se.ductus.themostat.temperature-sensors")
@@ -56,13 +56,12 @@ public class ThermostatService {
             }
         }
         for (TemperatureSetpoint temperatureSetpoint : temperatureSetpoints) {
-            String url = String.format("http://%s:8080", temperatureSetpoint.temperatureSensorId);
-            Temperature temperature = temperatureSensorService.getTemperature(url);
+            Temperature temperature = temperatureService.getTemperature(temperatureSetpoint.temperatureSensorId);
             if (temperature.celsius < temperatureSetpoint.celsius) {
-                temperatureSensorService.setHeating(url, new Heating(true));
+                temperatureService.setHeating(temperatureSetpoint.temperatureSensorId, new Heating(true));
             }
             if (temperature.celsius > temperatureSetpoint.celsius) {
-                temperatureSensorService.setHeating(url, new Heating(false));
+                temperatureService.setHeating(temperatureSetpoint.temperatureSensorId, new Heating(false));
             }
 
         }
