@@ -13,7 +13,7 @@ spec:
     type: Git
     git:
       uri: https://github.com/jesperfrisk/openshift-demo.git
-      ref: proxy-openshift
+      ref: main
     contextDir: temperature-service
   strategy:
     type: Docker
