@@ -1,13 +1,9 @@
 FROM maven:3.9-eclipse-temurin-17
 
 WORKDIR /app
-
-COPY pom.xml .
-RUN mvn -B -q -DskipTests dependency:go-offline
-
-COPY src ./src
+COPY . /app
 
 ENV HOME=/tmp
 ENV MAVEN_OPTS="-Dmaven.repo.local=/tmp/.m2/repository"
 
-CMD ["mvn", "-B", "test"]
+CMD ["bash", "-lc", "cp -R /app /tmp/app && cd /tmp/app && mvn -B test"]
