@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "thermostat-mysql.fullname" . }}-test-connection"
+  labels:
+    {{- include "thermostat-mysql.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "thermostat-mysql.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never

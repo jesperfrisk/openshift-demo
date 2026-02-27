@@ -1,0 +1,26 @@
+replicaCount: 2
+
+image:
+  repository: mysql
+  tag: "8.0"
+
+service:
+  port: 3306
+
+persistence:
+  enabled: true
+  storageClassName: crc-csi-hostpath-provisioner
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
+
+mysql:
+  database: thermostat
+  user: thermostat
+  timezone: Europe/Stockholm
+
+secret:
+  create: true
+  name: thermostat-mysql-secret
+  rootPassword: "Kassan1!"
+  password: "Thermostat1!"
