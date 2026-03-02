@@ -47,7 +47,7 @@ spec:
     spec:
       containers:
         - name: thermostat-mysql
-          image: mysql:8.0
+          image: registry.redhat.io/rhel9/mysql-80:9.7
           ports:
             - containerPort: 3306
           env:
