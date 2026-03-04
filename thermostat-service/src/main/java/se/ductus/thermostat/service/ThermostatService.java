@@ -15,8 +15,11 @@ import se.ductus.thermostat.model.TemperatureSetpoint;
 import se.ductus.thermostat.persistence.TemperatureSetpointRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import io.quarkus.scheduler.Scheduled;
+import se.ductus.thermostathistory.model.TemperatureSensorReading;
+import se.ductus.thermostathistory.service.ThermostatHistoryService;
 
 @Singleton
 public class ThermostatService {
@@ -29,7 +32,11 @@ public class ThermostatService {
     TemperatureService temperatureService;
 
     @Inject
-    @ConfigProperty(name = "se.ductus.themostat.temperature-sensors")
+    @RestClient
+    ThermostatHistoryService thermostatHistoryService;
+
+    @Inject
+    @ConfigProperty(name = "se.ductus.thermostat.temperature-sensors")
     List<String> temperatureSensors;
 
     void onStart(@Observes StartupEvent ev) {
@@ -57,12 +64,19 @@ public class ThermostatService {
         }
         for (TemperatureSetpoint temperatureSetpoint : temperatureSetpoints) {
             Temperature temperature = temperatureService.getTemperature(temperatureSetpoint.temperatureSensorId);
+
+            Heating heating = new Heating(false);
             if (temperature.celsius < temperatureSetpoint.celsius) {
-                temperatureService.setHeating(temperatureSetpoint.temperatureSensorId, new Heating(true));
+                heating.heating = true;
             }
-            if (temperature.celsius > temperatureSetpoint.celsius) {
-                temperatureService.setHeating(temperatureSetpoint.temperatureSensorId, new Heating(false));
-            }
+            temperatureService.setHeating(temperatureSetpoint.temperatureSensorId, heating);
+
+            TemperatureSensorReading temperatureSensorReading = new TemperatureSensorReading();
+            temperatureSensorReading.setTemperatureSensorId(temperatureSetpoint.temperatureSensorId);
+            temperatureSensorReading.setCelsius(temperature.celsius);
+            temperatureSensorReading.setHeating(heating.heating);
+            temperatureSensorReading.setReadAt(new Date());
+            thermostatHistoryService.createTemperatureSensorReading(temperatureSensorReading);
 
         }
 

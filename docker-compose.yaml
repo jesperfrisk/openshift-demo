@@ -28,6 +28,7 @@ services:
       MYSQL_PASSWORD: Thermostat1!
       TEMPERATURE_SENSORS: "temperature-sensor-1,temperature-sensor-2"
       DEFAULT_TEMPERATURE_SENSOR_URI: "http://temperature-service:8080"
+      THERMOSTAT_HISTORY_URI: "http://thermostat-history-service:8080"
 
   temperature-service:
     image: nginx:1.27-alpine
@@ -55,6 +56,14 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8082:8080"
+
+  thermostat-history-service:
+    container_name: thermostat-history-service
+    build:
+      context: ./thermostat-history-service/
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8080"
 
 
 volumes:
