@@ -1,0 +1,52 @@
+---
+openapi: 3.1.0
+components:
+  schemas:
+    TemperatureSensorReading:
+      type: object
+      properties:
+        temperatureSensorId:
+          type: string
+        celsius:
+          type: number
+          format: float
+        heating:
+          type: boolean
+        readAt:
+          type: string
+          format: date-time
+    TemperatureSensorReadings:
+      type: array
+      items:
+        $ref: "#/components/schemas/TemperatureSensorReading"
+paths:
+  /temperature-sensor-reading:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TemperatureSensorReading"
+        required: true
+      responses:
+        "201":
+          description: No Content
+        "400":
+          description: Bad Request
+      summary: Create new temperature sensor reading
+      tags:
+      - Temperature Resource
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TemperatureSensorReadings"
+      summary: Featch temperature sensor readings
+      tags:
+      - Temperature Resource
+info:
+  title: thermostat-history-service API
+  version: 1.0.0-SNAPSHOT
