@@ -61,3 +61,7 @@ Currently the Temperature Sensor System is written with Spring. Your next task i
 Currently the Thermostat system builds the url to specific temperature sensor by using the `temperatureSensorId` as address (as it is also the service name). This works but is a crude soulution. Best would be if the Thermostat system instead calls a `TemperatureService` which handles each temperature sensor request and routes it to the correct temperature sensor.
 
 Implement the [Temperature Service Api Spec](./temperature-service-api-spec.yaml)
+
+## Task 4: Add Thermostat History Service
+
+We want to see a history of the temperature controls and how the temperature has changed over time. Implement a new quarkus app that follows the [Thermostat History api spec](./thermostat-history-api-spec.yaml). Also integrate the Thermostat system with the new Thermostat History system, so that it creates and sends a reading of each temperature control that it performs. A simple frontend can be added by placing [index.html](./index.html) file under `<thermostat-history-service-name>/src/main/resources/META-INF/resources/index.html`, then view the thermostat history at `http://<thermostat-history-address>/index.html`
