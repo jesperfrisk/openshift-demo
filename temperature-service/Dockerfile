@@ -3,8 +3,7 @@ WORKDIR /workspace
 
 COPY . .
 
-RUN chmod +x mvnw
-RUN ./mvnw -DskipTests package
+RUN mvn -DskipTests package
 
 FROM eclipse-temurin:17-jre
 WORKDIR /work

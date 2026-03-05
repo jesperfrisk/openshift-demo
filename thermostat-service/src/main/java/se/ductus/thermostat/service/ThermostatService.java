@@ -29,7 +29,7 @@ public class ThermostatService {
     TemperatureSensorService temperatureSensorService;
 
     @Inject
-    @ConfigProperty(name = "se.ductus.themostat.temperature-sensors")
+    @ConfigProperty(name = "se.ductus.thermostat.temperature-sensors")
     List<String> temperatureSensors;
 
     void onStart(@Observes StartupEvent ev) {
