@@ -21,12 +21,13 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+      - "5005:5005"
     environment:
       MYSQL_URI: thermostat-mysql:3306
       MYSQL_DATABASE: thermostat
       MYSQL_USER: thermostat
       MYSQL_PASSWORD: Thermostat1!
-      TEMPERATURE_SENSORS: "temperature-sensor-1,temperature-sensor-2"
+      TEMPERATURE_SENSORS: "temperature-sensor-1,temperature-sensor-2,temperature-sensor-spring"
       DEFAULT_TEMPERATURE_SENSOR: temperature-sensor-1
 
   temperature-sensor-1:
@@ -44,6 +45,14 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8082:8080"
+
+  temperature-sensor-spring:
+    container_name: temperature-sensor-spring
+    build:
+      context: ./tempsensor-service-spring/
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8080"
 
 
 volumes:
