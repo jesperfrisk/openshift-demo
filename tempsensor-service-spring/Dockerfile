@@ -1,4 +1,4 @@
-FROM dhi.io/maven:3-jdk25-debian13-dev AS build
+FROM maven:3.9-eclipse-temurin-17 AS build
 WORKDIR /workspace
 LABEL authors="Samed Salman"
 
@@ -6,7 +6,7 @@ COPY . .
 
 RUN mvn -DskipTests package
 
-FROM dhi.io/maven:3-jdk25-debian13-dev
+FROM maven:3.9-eclipse-temurin-17
 WORKDIR /app
 COPY --from=build /workspace/target/ /app
 EXPOSE 8080
