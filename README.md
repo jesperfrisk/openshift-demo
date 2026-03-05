@@ -32,6 +32,10 @@ The thermostat system controls one or multiple temperature sensors. This system 
 
 Each setpoint is stored in an MySql Database. Furthermore, this system uses the Flyway database migration tool in order to set up the database. See [Using Flyway](quarkus.io/guides/flyway) 
 
+### Thermostat History
+
+This system stores a short history of the temperature controls made by the thermostat system. The thermostat system sends it controls to thermostat history, this includes temperature, sensor-id, time and if heating is on. The thermostat history system can then display these control readings in a simple graph, this is found at [Thermostat History](http://localhost:8083/index.html) (if you have started the system via the given docker compose).
+
 ## Setup
 Before diving into deploying the application and database via OpenShift, you should first learn how to deploy containers locally (e.g. via Docker). When moving to OpenShift, which basically is a commercialized Kubernetes system that depends on containers, having some understanding of containerization is beneficial. If you are already familiar with running applications in docker etc, you can skip to [Setting Up Via OpenShift](#Setting-Up-Via-OpenShift) that continues with how to deploy the app via kubernetes manifests to the OpenShift cluster.
 

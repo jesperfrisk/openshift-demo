@@ -33,10 +33,10 @@ public class InMemoryTemperatureProvider implements TemperatureProvider {
         float newTemp;
 
         if (heating) {
-            newTemp = this.temperature.getCelsius() + 0.8f;
+            newTemp = this.temperature.getCelsius() + (float) (0.1f + Math.random() * (1.2f - 0.1f));
         }
         else {
-            newTemp = this.temperature.getCelsius() - 0.4f;
+            newTemp = this.temperature.getCelsius() - (float) (0f + Math.random() * (0.6f - 0f));
         }
 
         if (newTemp >= MAX_TEMPERATURE) {
