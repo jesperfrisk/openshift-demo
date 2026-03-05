@@ -9,4 +9,4 @@ FROM eclipse-temurin:17-jre
 WORKDIR /work
 COPY --from=build /workspace/target/quarkus-app/ /work/
 EXPOSE 8080
-ENTRYPOINT ["java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "/work/quarkus-run.jar"]
+ENTRYPOINT ["java", "-jar", "/work/quarkus-run.jar"]
