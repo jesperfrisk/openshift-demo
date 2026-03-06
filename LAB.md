@@ -36,7 +36,7 @@ oc get routes
 ```
 Identify the Address for the Thermostat system and access the swagger at `https://<thermostat-address>/q/swagger-ui`
 
-Furthermore, you can confirm that the current temperature of the sensors are dropping to MIN, by calling the Temperrature endpoints at `https://<temperature-sensor-address>/q/swagger-ui`
+Furthermore, you can confirm that the current temperature of the sensors are dropping to MIN, by calling the Temperrature endpoints at `https://<temperature-sensor-address>/swagger-ui.html`
 
 > **HINT** - *The problem with the Thermostat system is located in the `controlTemperature` method, place a breakpoint here to identify the problem.*
 
