@@ -146,4 +146,5 @@ This is a list of the docs that the creators have used during the creation of th
 ## Creators to reach out to if you have any questions
 Daniel Thungren - daniel.thungren@ductus.se \
 Jacob Möller    - jacob.moller@ductus.se \
-Jesper Frisk    - jesper.frisk@ductus.se
+Jesper Frisk    - jesper.frisk@ductus.se \
+Samed Salman    - samed.salman@ductus.se
