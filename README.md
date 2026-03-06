@@ -106,7 +106,7 @@ The creators of this repository have set up the cluster using Kubernetes/OpenShi
 
 * Start the database pod: `oc apply -f thermostat-mysql.yaml`, check in the OpenShift console if the pod has started and that you can access the terminal, you should be able to access the mysql db from its cli with the credentials set in the `thermostat-mysql.yaml` manifest you just applied.
 
-* Build the images for the apps, from the repository, using the buildconfig yaml manifests: `oc apply -f build-temperature-sensor.yaml` and `oc apply -f build-thermostat.yaml`. If you check the build manifests you can set the repo url and the target branch that the image is built from.
+* Build the images for the apps, from the repository, using the buildconfig yaml manifests: `oc apply -f build-temperature-sensor-spring.yaml` and `oc apply -f build-thermostat.yaml`. If you check the build manifests you can set the repo url and the target branch that the image is built from.
 
 * Deploy the apps by using the deployment manifests: `oc apply -f deployment-temperature-sensor-1.yaml`, `oc apply -f deployment-temperature-sensor-2.yaml` and `oc apply -f deployment-thermostat.yaml`. This will start two temperature sensors and one themrostat system.
 
@@ -115,7 +115,7 @@ The creators of this repository have set up the cluster using Kubernetes/OpenShi
 Full openshift cluster setup:
 ```
 oc apply -f thermostat-mysql.yaml
-oc apply -f build-temperature-sensor.yaml
+oc apply -f build-temperature-sensor-spring.yaml
 oc apply -f build-thermostat.yaml
 oc apply -f deployment-temperature-sensor-1.yaml
 oc apply -f deployment-temperature-sensor-2.yaml
