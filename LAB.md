@@ -36,13 +36,13 @@ oc get routes
 ```
 Identify the Address for the Thermostat system and access the swagger at `https://<thermostat-address>/q/swagger-ui`
 
-Furthermore, you can confirm that the current temperature of the sensors are dropping to MIN, by calling the Temperrature endpoints at `https://<temperature-sensor-address>/swagger-ui.html`
+Furthermore, you can confirm that the current temperature of the sensors are dropping to MIN, by calling the Temperature endpoints at `https://<temperature-sensor-address>/swagger-ui.html`
 
 > **HINT** - *The problem with the Thermostat system is located in the `controlTemperature` method, place a breakpoint here to identify the problem.*
 
 ## Task 2: Upgrade the Temperature Sensor System
 
-Currently the Temperature Sensor System is written with Spring. Your next task is to rewrite the current Temperature Sensor System with Quarkus. See [Quarkus docs - get started](https://quarkus.io/get-started/)
+Currently, the Temperature Sensor System is written with Spring. Your next task is to rewrite the current Temperature Sensor System with Quarkus. See [Quarkus docs - get started](https://quarkus.io/get-started/)
 
 ### Requirements
 
@@ -50,7 +50,7 @@ Currently the Temperature Sensor System is written with Spring. Your next task i
 
 2. The system must provide a temperature value, (does not have to be an actual temperature, can be a variable that has a mock value).
 
-3. The temperature value must change over some time inteval (the span of the time interval is not importand, nor the size of the change).
+3. The temperature value must change over some time interval (the span of the time interval is not important, nor the size of the change).
     1. When `heat` is on the temperature value must increase.
     2. When `heat` is off the temperature value must decrease.
 
@@ -58,7 +58,7 @@ Currently the Temperature Sensor System is written with Spring. Your next task i
 
 ## Task 3: Abstract away individual handling of Temperature Sensors
 
-Currently the Thermostat system builds the url to specific temperature sensor by using the `temperatureSensorId` as address (as it is also the service name). This works but is a crude soulution. Best would be if the Thermostat system instead calls a `TemperatureService` which handles each temperature sensor request and routes it to the correct temperature sensor.
+Currently, the Thermostat system builds the url to specific temperature sensor by using the `temperatureSensorId` as address (as it is also the service name). This works but is a crude solution. Best would be if the Thermostat system instead calls a `TemperatureService` which handles each temperature sensor request and routes it to the correct temperature sensor.
 
 Implement the [Temperature Service Api Spec](./temperature-service-api-spec.yaml)
 
